@@ -8,6 +8,7 @@ import {
 
 import DatabaseHTML from './database';
 import CardProfileHTML from './card-profile';
+import CardCompareHTML from './compare-tool';
 
 import './index.css';
 import 'react-table/react-table.css'
@@ -18,7 +19,7 @@ ReactDOM.render(
         <div>
             <Route exact path="/" component={DatabaseHTML} />
             <Route path="/card-profile" component={CardProfileHTML} />
-            {/* <Route path="compare" component={CardComparison} /> */}
+            <Route path="/compare" component={CardCompareHTML} />
         </div>
     </HashRouter >,
     document.getElementById('root')
