@@ -60,17 +60,17 @@ class CardCompare extends React.Component {
                     <div class="row">
                         <div class="col">
                         </div>
-                        <div class="col-2 mb-1">
-                            <li className={`list-group-item justify-content-between align-items-center list-group-item-dark ${this.state.dflex}`}>
+                        <div class="col-2 p-0 mb-1">
+                            <li className={`list-group-item justify-content-between align-items-center list-group-item-dark p-0 ${this.state.dflex}`}>
                                 <ul className="list-group">
-                                    <a href={PlayerProfileUrl(this.state.card_data1.hash)} target="_blank" ><img alt='Card Img' className="w-100 p-1" src={PlayerCardImgSrc(this.state.card_data1.hash)} /></a>
+                                    <a href={PlayerProfileUrl(this.state.card_data1.hash)} target="_blank" ><img alt='Card Img' className="w-100" src={PlayerCardImgSrc(this.state.card_data1.hash)} /></a>
                                 </ul>
                             </li>
                         </div>
-                        <div class="col-2 mb-1">
-                            <li className={`list-group-item justify-content-between align-items-center list-group-item-dark ${this.state.dflex}`}>
+                        <div class="col-2 p-0 mb-1">
+                            <li className={`list-group-item justify-content-between align-items-center list-group-item-dark p-0 ${this.state.dflex}`}>
                                 <ul className="list-group">
-                                    <a href={PlayerProfileUrl(this.state.card_data2.hash)} target="_blank" ><img alt='Card Img' className="w-100 p-1" src={PlayerCardImgSrc(this.state.card_data2.hash)} /></a>
+                                    <a href={PlayerProfileUrl(this.state.card_data2.hash)} target="_blank" ><img alt='Card Img' className="w-100" src={PlayerCardImgSrc(this.state.card_data2.hash)} /></a>
                                 </ul>
                             </li>
                         </div>
@@ -81,12 +81,12 @@ class CardCompare extends React.Component {
                                 {statNames}
                             </ul>
                         </div>
-                        <div class="col-2">
+                        <div class="col-2 p-0">
                             <ul className="list-group">
                                 {playerOneStats}
                             </ul>
                         </div>
-                        <div class="col-2">
+                        <div class="col-2 p-0">
                             <ul className="list-group">
                                 {playerTwoStats}
                             </ul>

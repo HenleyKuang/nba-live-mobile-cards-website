@@ -11,12 +11,13 @@ class StatRow extends React.Component {
             badgeType: props.badgeType || 'badge-primary',
             badgeType2: props.badgeType || 'badge-primary',
             className: props.className,
-            dflex: props.dflex === false ? '' : 'd-flex'
+            dflex: props.dflex === false ? '' : 'd-flex',
+            listGroupClassName: props.listGroupClassName ? props.listGroupClassName : ''
         };
     }
 
     render() {
-            return <li className={`list-group-item justify-content-between align-items-center list-group-item-dark ${this.state.dflex}`}>
+            return <li className={`list-group-item justify-content-between align-items-center list-group-item-dark p-1 ${this.state.dflex} ${this.state.listGroupClassName}`}>
                 {this.state.statName}
                 <span className={`badge ${this.state.badgeType} badge-pill ${this.state.className}`}>
                     {this.state.statValue}
