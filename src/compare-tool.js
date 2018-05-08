@@ -46,9 +46,9 @@ class CardCompare extends React.Component {
                     stat1.badge = "badge-danger"
                     stat2.badge = "badge-success"
                 }
-                statNames.push(<StatRow key={stat1.name} statName={stat1.name} />)
-                playerOneStats.push(<StatRow key={stat1.name} statValue={stat1.value} badgeType={stat1.badge} dflex={false} />);
-                playerTwoStats.push(<StatRow key={stat1.name} statValue={stat2.value} badgeType={stat2.badge} dflex={false} />);
+                statNames.push(<StatRow key={stat1.name} statName={stat1.name} padding="p-1" />)
+                playerOneStats.push(<StatRow key={stat1.name} statValue={stat1.value} badgeType={stat1.badge} dflex={false} padding="p-1" />);
+                playerTwoStats.push(<StatRow key={stat1.name} statValue={stat2.value} badgeType={stat2.badge} dflex={false} padding="p-1" />);
             }
         }
         return <div>
