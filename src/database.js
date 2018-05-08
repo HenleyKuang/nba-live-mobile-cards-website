@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactTable from "react-table";
-import PlayerCardImgSrc from './components/player-img-src'
+import {PlayerCardImgSrc, PlayerProfileUrl} from './components/player-img-src'
 
 import $ from 'jquery';
 
@@ -28,10 +28,6 @@ class Database extends React.Component {
     PlayerList() {
         $.getJSON ('//nba-live-mobile-parser-api.herokuapp.com/search')
             .then(( results ) => this.setState({ players: results }));
-    }
-
-    PlayerProfileUrl(hash) {
-      return "/#/card-profile?player_id=" + hash;
     }
 
     CompareCardsUrl(hash1, hash2) {
@@ -102,7 +98,7 @@ class Database extends React.Component {
       }, {
         Header: "Card",
         accessor: 'hash',
-        Cell: props => <a href={this.PlayerProfileUrl(props.value)} target="_blank" ><img width="40" alt='Card Img' src={PlayerCardImgSrc(props.value)} /></a>,
+        Cell: props => <a href={PlayerProfileUrl(props.value)} target="_blank" ><img width="40" alt='Card Img' src={PlayerCardImgSrc(props.value)} /></a>,
         className: "p-0",
         width: 45,
         sortable: false

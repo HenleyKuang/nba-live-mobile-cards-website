@@ -1,5 +1,7 @@
-const PlayerCardImgSrc = function(hash) {
+export const PlayerCardImgSrc = function(hash) {
     return "//nba-live-mobile-parser-api.herokuapp.com/searchCardImage/?hash=" + hash;
-}
+};
 
-export default PlayerCardImgSrc
+export const PlayerProfileUrl = function(hash) {
+    return "/#/card-profile?player_id=" + hash;
+};

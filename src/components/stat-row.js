@@ -7,29 +7,22 @@ class StatRow extends React.Component {
         this.state = {
             statName: props.statName,
             statValue: props.statValue,
+            statValue2: props.statValue2,
             badgeType: props.badgeType || 'badge-primary',
+            badgeType2: props.badgeType || 'badge-primary',
             className: props.className,
-            reverse: props.reverse || false
+            dflex: props.dflex === false ? '' : 'd-flex'
         };
     }
 
     render() {
-        if (this.state.reverse === false) {
-            return <li className="list-group-item d-flex justify-content-between align-items-center list-group-item-dark">
+            return <li className={`list-group-item justify-content-between align-items-center list-group-item-dark ${this.state.dflex}`}>
                 {this.state.statName}
                 <span className={`badge ${this.state.badgeType} badge-pill ${this.state.className}`}>
                     {this.state.statValue}
                 </span>
-            </li>
-        } else {
-            return <li className="list-group-item d-flex justify-content-between align-items-center list-group-item-dark">
-                <span className={`badge ${this.state.badgeType} badge-pill ${this.state.className}`}>
-                    {this.state.statValue}
-                </span>
-                {this.state.statName}
             </li>
         }
-    }
 }
 
 export default StatRow

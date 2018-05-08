@@ -1,7 +1,7 @@
 import React from 'react';
 import $ from 'jquery';
 import StatRow from './components/stat-row'
-import PlayerCardImgSrc from './components/player-img-src'
+import { PlayerCardImgSrc } from './components/player-img-src'
 
 class CardProfile extends React.Component {
     constructor(props) {

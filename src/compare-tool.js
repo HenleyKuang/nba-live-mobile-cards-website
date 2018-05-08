@@ -1,7 +1,7 @@
 import React from 'react';
 import $ from 'jquery';
 import StatRow from './components/stat-row'
-import PlayerCardImgSrc from './components/player-img-src'
+import {PlayerCardImgSrc, PlayerProfileUrl} from './components/player-img-src'
 
 class CardCompare extends React.Component {
     constructor(props) {
@@ -32,8 +32,9 @@ class CardCompare extends React.Component {
     render() {
         if (Object.keys(this.state.card_data1).length === 0 || Object.keys(this.state.card_data2).length === 0)
             return '';
-        let playerOne = [];
-        let playerTwo = [];
+        let playerOneStats = [];
+        let playerTwoStats = [];
+        let statNames = [];
         for (let c = 1; c <= 2; c++) {
             for (let r = 1; r <= 8; r++) {
                 const stat1 = this.state.card_data1.stats[`(${c},${r})`];
@@ -45,8 +46,9 @@ class CardCompare extends React.Component {
                     stat1.badge = "badge-danger"
                     stat2.badge = "badge-success"
                 }
-                playerOne.push(<StatRow key={stat1.name} statName={stat1.name} statValue={stat1.value} badgeType={stat1.badge} />);
-                playerTwo.push(<StatRow key={stat2.name} statName={stat2.name} statValue={stat2.value} badgeType={stat2.badge} reverse={true} />);
+                statNames.push(<StatRow key={stat1.name} statName={stat1.name} />)
+                playerOneStats.push(<StatRow key={stat1.name} statValue={stat1.value} badgeType={stat1.badge} dflex={false} />);
+                playerTwoStats.push(<StatRow key={stat1.name} statValue={stat2.value} badgeType={stat2.badge} dflex={false} />);
             }
         }
         return <div>
@@ -55,17 +57,38 @@ class CardCompare extends React.Component {
                     <strong className="text-uppercase">{this.state.card_data1.name}</strong> vs <strong className="text-uppercase">{this.state.card_data2.name}</strong>
                 </div>
                 <div className="card-body">
-                    <div className="row">
-                        <div className="col">
-                            <img alt='Card Img' className="w-25 p-3" src={PlayerCardImgSrc(this.state.card_data1.hash)} />
+                    <div class="row">
+                        <div class="col">
+                        </div>
+                        <div class="col-2 mb-1">
+                            <li className={`list-group-item justify-content-between align-items-center list-group-item-dark ${this.state.dflex}`}>
+                                <ul className="list-group">
+                                    <a href={PlayerProfileUrl(this.state.card_data1.hash)} target="_blank" ><img alt='Card Img' className="w-100 p-1" src={PlayerCardImgSrc(this.state.card_data1.hash)} /></a>
+                                </ul>
+                            </li>
+                        </div>
+                        <div class="col-2 mb-1">
+                            <li className={`list-group-item justify-content-between align-items-center list-group-item-dark ${this.state.dflex}`}>
+                                <ul className="list-group">
+                                    <a href={PlayerProfileUrl(this.state.card_data2.hash)} target="_blank" ><img alt='Card Img' className="w-100 p-1" src={PlayerCardImgSrc(this.state.card_data2.hash)} /></a>
+                                </ul>
+                            </li>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
                             <ul className="list-group">
-                                {playerOne}
+                                {statNames}
                             </ul>
                         </div>
-                        <div className="col">
-                            <img alt='Card Img' className="w-25 p-3" src={PlayerCardImgSrc(this.state.card_data2.hash)} />
+                        <div class="col-2">
                             <ul className="list-group">
-                                {playerTwo}
+                                {playerOneStats}
+                            </ul>
+                        </div>
+                        <div class="col-2">
+                            <ul className="list-group">
+                                {playerTwoStats}
                             </ul>
                         </div>
                     </div>
