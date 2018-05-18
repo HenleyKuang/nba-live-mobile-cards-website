@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactTable from "react-table";
+import ReactTooltip from 'react-tooltip'
 import {PlayerCardImgSrc, PlayerProfileUrl} from './components/player-img-src'
 
 import $ from 'jquery';
@@ -19,6 +20,8 @@ class Database extends React.Component {
         this.showHideCompareSelectionColumn = this.showHideCompareSelectionColumn.bind(this);
         this.addCompareCard = this.addCompareCard.bind(this);
         this.showHideAlertMsg = this.showHideAlertMsg.bind(this);
+        this.convertEpochToLocalTime = this.convertEpochToLocalTime.bind(this);
+        this.getTotalStats = this.getTotalStats.bind(this);
     }
 
     componentDidMount() {
@@ -26,12 +29,21 @@ class Database extends React.Component {
     }
 
     PlayerList() {
-        $.getJSON ('//nba-live-mobile-parser-api.herokuapp.com/search')
+        $.getJSON ('//nba-live-mobile-parser-api.herokuapp.com/search/')
             .then(( results ) => this.setState({ players: results }));
     }
 
     CompareCardsUrl(hash1, hash2) {
       return `/#/compare?player_one=${hash1}&player_two=${hash2}`
+    }
+
+    getTotalStats(stats) {
+      let total = 0;
+      for(let index in stats) {
+        let stat = stats[index];
+        total += stat.value;
+      }
+      return total;
     }
 
     showHideCompareSelectionColumn() {
@@ -46,6 +58,12 @@ class Database extends React.Component {
       this.setState({
         alertMsg: this.state.alertMsg.length > 0 ? '' : 'Select 2 cards to compare',
       });
+    }
+
+    convertEpochToLocalTime(utcSeconds) {
+      var d = new Date(0); // The 0 there is the key, which sets the date to the epoch
+      d.setUTCSeconds(utcSeconds);
+      return d.toLocaleString();
     }
 
     addCompareCard(player_data) {
@@ -188,6 +206,20 @@ class Database extends React.Component {
         Header: "DRB",
         accessor: "stats[(2,8)].value",
         width: 50
+      }, {
+        id: "TAS",
+        Header: <strong data-tip="Total Advanced Stats">TAS</strong>,
+        accessor: player_data => {
+          return this.getTotalStats(player_data.stats)
+        },
+        Cell: props => <strong>{props.value}</strong>,
+        width: 75
+      }, {
+        id: 'add_time',
+        Header: "Date Added",
+        accessor: "add_time",
+        Cell: props => <span>{this.convertEpochToLocalTime(props.value)}</span>,
+        width: 150
       }]
 
     return <div>
@@ -214,16 +246,18 @@ class Database extends React.Component {
         </div>
       </div>
 
+        <ReactTooltip place="top" type="dark" effect="float"/>
         <ReactTable
-            pageSize={10}
-            minRows = {0}
-            style={{fontSize: '12px'}}
-            defaultSorted={[{
-                id: 'ovr',
-                desc: true
-              }]}
-            data={data}
-            columns={columns}
+          pageSize={10}
+          minRows = {0}
+          style={{fontSize: '12px'}}
+          defaultSorted={[{
+            /* id: 'add_time', */
+            id: 'ovr',
+            desc: true
+          }]}
+          data={data}
+          columns={columns}
         />
       </div>
     }
