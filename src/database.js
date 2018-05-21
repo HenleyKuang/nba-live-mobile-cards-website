@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactTable from "react-table";
 import ReactTooltip from 'react-tooltip'
-import {PlayerCardImgSrc, PlayerProfileUrl} from './components/player-img-src'
+import {PlayerCardImgSrc, PlayerProfileUrl, convertInchesToHeightString} from './components/player-img-src'
 
 import $ from 'jquery';
 
@@ -103,6 +103,7 @@ class Database extends React.Component {
             })
         }
 
+      const statRowWidth = 40
       const columns = [{
         id: 'Select',
         Header: "Select",
@@ -129,11 +130,11 @@ class Database extends React.Component {
         Header: 'OVR',
         accessor: 'ovr',
         Cell: props => <span className='number'>{props.value}</span>,
-        width: 50
+        width: statRowWidth
       }, {
         Header: 'POS',
         accessor: 'pos',
-        width: 50
+        width: statRowWidth
       }, {
         Header: 'LU',
         accessor: 'type',
@@ -141,79 +142,80 @@ class Database extends React.Component {
       }, {
         Header: 'HT',
         accessor: 'height',
-        width: 50
+        Cell: props => <span className='number'>{convertInchesToHeightString(props.value)}</span>,
+        width: statRowWidth
       }, {
         Header: "SPD",
         accessor: "stats[(1,1)].value",
-        width: 50
+        width: statRowWidth
       }, {
         Header: "AGL",
         accessor: "stats[(1,2)].value",
-        width: 50
+        width: statRowWidth
       }, {
         Header: "MRS",
         accessor: "stats[(1,3)].value",
-        width: 50
+        width: statRowWidth
       }, {
         Header: "3PT",
         accessor: "stats[(1,4)].value",
-        width: 50
+        width: statRowWidth
       }, {
         Header: "IPS",
         accessor: "stats[(1,5)].value",
-        width: 50
+        width: statRowWidth
       }, {
         Header: "PST",
         accessor: "stats[(1,6)].value",
-        width: 50
+        width: statRowWidth
       }, {
         Header: "DNK",
         accessor: "stats[(1,7)].value",
-        width: 50
+        width: statRowWidth
       }, {
         Header: "SWC",
         accessor: "stats[(1,8)].value",
-        width: 50
+        width: statRowWidth
       }, {
         Header: "OBD",
         accessor: "stats[(2,1)].value",
-        width: 50
+        width: statRowWidth
       }, {
         Header: "BLK",
         accessor: "stats[(2,2)].value",
-        width: 50
+        width: statRowWidth
       }, {
         Header: "STL",
         accessor: "stats[(2,3)].value",
-        width: 50
+        width: statRowWidth
       }, {
         Header: "DRI",
         accessor: "stats[(2,4)].value",
-        width: 50
+        width: statRowWidth
       }, {
         Header: "PSA",
         accessor: "stats[(2,5)].value",
-        width: 50
+        width: statRowWidth
       }, {
         Header: "BOX",
         accessor: "stats[(2,6)].value",
-        width: 50
+        width: statRowWidth
       }, {
         Header: "ORB",
         accessor: "stats[(2,7)].value",
-        width: 50
+        width: statRowWidth
       }, {
         Header: "DRB",
         accessor: "stats[(2,8)].value",
-        width: 50
+        width: statRowWidth
       }, {
         id: "TAS",
-        Header: <strong data-tip="Total Advanced Stats">TAS</strong>,
+        Header: <strong data-tip="Total Advance Stats">TAS</strong>,
         accessor: player_data => {
           return this.getTotalStats(player_data.stats)
         },
         Cell: props => <strong>{props.value}</strong>,
-        width: 75
+        width: 50
       }, {
         id: 'add_time',
         Header: "Date Added",
