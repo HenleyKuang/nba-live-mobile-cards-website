@@ -59,7 +59,7 @@ class CardCompare extends React.Component {
                             name: "Total Advance Stats"
                            }];
         let detailNames = [];
-        for (let i = 1; i < details.length; i++) {
+        for (let i = 0; i < details.length; i++) {
             detailNames.push(<StatRow key={details[i].name} statName={details[i].name} padding="pb-1 pt-1 pr-0 pl-0" />);
             if (details[i].accessor) {
                 let stat1 = this.state.card_data1[details[i].accessor];
