@@ -11,7 +11,8 @@ import CardProfileHTML from './card-profile';
 import CardCompareHTML from './compare-tool';
 
 import './index.css';
-import 'react-table/react-table.css'
+import 'react-table/react-table.css';
+// import 'bootstrap/dist/css/bootstrap.3.3.7.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 ReactDOM.render(

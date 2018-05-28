@@ -1,6 +1,8 @@
 import React from 'react';
 import ReactTable from "react-table";
 import ReactTooltip from 'react-tooltip'
+// import { SplitButton, MenuItem, ButtonToolbar, ToggleButtonGroup, ToggleButton } from 'react-bootstrap';
+import { Button, ButtonGroup, ButtonDropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
 import {PlayerCardImgSrc, PlayerProfileUrl, convertInchesToHeightString} from './components/player-img-src'
 
 import $ from 'jquery';
@@ -13,15 +15,24 @@ class Database extends React.Component {
             alertMsg: '',
             players: [],
             search: '',
+            searchMenuOpen: false,
+            posSelectedOption: [],
+            typeSelectedOption: [],
             selectCompareCards: false,
             compareCards: {}
         };
+
+        this._forceOpen = false;
 
         this.showHideCompareSelectionColumn = this.showHideCompareSelectionColumn.bind(this);
         this.addCompareCard = this.addCompareCard.bind(this);
         this.showHideAlertMsg = this.showHideAlertMsg.bind(this);
         this.convertEpochToLocalTime = this.convertEpochToLocalTime.bind(this);
         this.getTotalStats = this.getTotalStats.bind(this);
+        this.dropDownToggle = this.dropDownToggle.bind(this);
+        this.preventSearchMenuForceClose = this.preventSearchMenuForceClose.bind(this);
+        this.onPosCheckboxBtnClick = this.onPosCheckboxBtnClick.bind(this);
+        this.onTypeCheckboxBtnClick = this.onTypeCheckboxBtnClick.bind(this);
     }
 
     componentDidMount() {
@@ -80,7 +91,7 @@ class Database extends React.Component {
           const playerName2 = player_data[1]
           newAlertMsg = [
             `Two cards have been selected: ${playerName1} and ${playerName2} `,
-            <a href={this.CompareCardsUrl(hash1,hash2)} target="_blank"><button type="button" className="btn btn-success" onClick={this.showHideAlertMsg}>Click here to compare</button></a>
+            <a key='' href={this.CompareCardsUrl(hash1,hash2)} target="_blank"><button type="button" className="btn btn-success" onClick={this.showHideAlertMsg}>Click here to compare</button></a>
           ]
           showSelectCompareCards = false
         }
@@ -95,13 +106,58 @@ class Database extends React.Component {
       });
     }
 
+    dropDownToggle() {
+      if (this._forceOpen){
+        this.setState({ searchMenuOpen: true });
+        this._forceOpen = false;
+      } else {
+        this.setState({
+          searchMenuOpen: !this.state.searchMenuOpen
+        });
+      }
+    }
+
+    preventSearchMenuForceClose() {
+      this._forceOpen = true
+    }
+
+    onPosCheckboxBtnClick(selected) {
+      const index = this.state.posSelectedOption.indexOf(selected);
+      if (index < 0) {
+        this.state.posSelectedOption.push(selected);
+      } else {
+        this.state.posSelectedOption.splice(index, 1);
+      }
+      this.setState({ posSelectedOption: [...this.state.posSelectedOption] });
+    }
+
+    onTypeCheckboxBtnClick(selected) {
+      const index = this.state.typeSelectedOption.indexOf(selected);
+      if (index < 0) {
+        this.state.typeSelectedOption.push(selected);
+      } else {
+        this.state.typeSelectedOption.splice(index, 1);
+      }
+      this.setState({ typeSelectedOption: [...this.state.typeSelectedOption] });
+    }
+
     render() {
-        let data = this.state.players
-        if (this.state.search) {
-            data = data.filter(row => {
-                return row.name.toLowerCase().includes(this.state.search.toLowerCase())
-            })
-        }
+      let data = this.state.players
+      if (this.state.search) {
+        data = data.filter(row => {
+          return row.name.toLowerCase().includes(this.state.search.toLowerCase())
+        })
+      }
+      if (this.state.posSelectedOption.length > 0) {
+        data = data.filter(row => {
+          return this.state.posSelectedOption.includes(row.pos)
+        })
+      }
+      if (this.state.typeSelectedOption.length > 0) {
+        data = data.filter(row => {
+          return this.state.typeSelectedOption.includes(row.type)
+        })
+      }
 
       const statRowWidth = 40
       const columns = [{
@@ -229,17 +285,70 @@ class Database extends React.Component {
         {this.state.alertMsg}
       </div>}
       <div className="btn-toolbar m-2" role="toolbar" aria-label="Toolbar with button groups">
-        <div className="input-group">
-          <input
-                  type="text"
-                  className="form-control w-25 m-1"
-                  placeholder="Search.."
-                  aria-label="Search"
-                  aria-describedby="basic-addon1"
-                  value={this.state.search}
-                  onChange={e => this.setState({search: e.target.value})}
+        <ButtonDropdown isOpen={this.state.searchMenuOpen} toggle={this.dropDownToggle}>
+          <DropdownToggle caret>
+            <div className="input-group d-inline-block p-0">
+              <input
+                type="text"
+                className="form-control w-100 m-0"
+                placeholder="Search.."
+                aria-label="Search"
+                aria-describedby="basic-addon1"
+                value={this.state.search}
+                onChange={e => this.setState({search: e.target.value})}
               />
-        </div>
+            </div>
+          </DropdownToggle>
+          <DropdownMenu>
+            <DropdownItem header>Position</DropdownItem>
+            <DropdownItem>
+              <ButtonGroup onClick={() => this.preventSearchMenuForceClose()}>
+                <Button outline color="primary" onClick={() => this.onPosCheckboxBtnClick("PG")} active={this.state.posSelectedOption.includes("PG")}>PG</Button>
+                <Button outline color="primary" onClick={() => this.onPosCheckboxBtnClick("SG")} active={this.state.posSelectedOption.includes("SG")}>SG</Button>
+                <Button outline color="primary" onClick={() => this.onPosCheckboxBtnClick("SF")} active={this.state.posSelectedOption.includes("SF")}>SF</Button>
+                <Button outline color="primary" onClick={() => this.onPosCheckboxBtnClick("PF")} active={this.state.posSelectedOption.includes("PF")}>PF</Button>
+                <Button outline color="primary" onClick={() => this.onPosCheckboxBtnClick("C")} active={this.state.posSelectedOption.includes("C")}>C</Button>
+              </ButtonGroup>
+            </DropdownItem>
+            <DropdownItem header>Type</DropdownItem>
+            <DropdownItem>
+              <ButtonGroup onClick={() => this.preventSearchMenuForceClose()}>
+                <Button outline color="primary" onClick={() => this.onTypeCheckboxBtnClick("BAL")} active={this.state.typeSelectedOption.includes("BAL")}>BAL</Button>
+                <Button outline color="primary" onClick={() => this.onTypeCheckboxBtnClick("DEF")} active={this.state.typeSelectedOption.includes("DEF")}>DEF</Button>
+                <Button outline color="primary" onClick={() => this.onTypeCheckboxBtnClick("SHT")} active={this.state.typeSelectedOption.includes("SHT")}>SHT</Button>
+                <Button outline color="primary" onClick={() => this.onTypeCheckboxBtnClick("POW")} active={this.state.typeSelectedOption.includes("POW")}>POW</Button>
+                <Button outline color="primary" onClick={() => this.onTypeCheckboxBtnClick("RUN")} active={this.state.typeSelectedOption.includes("RUN")}>RUN</Button>
+              </ButtonGroup>
+            </DropdownItem>
+          </DropdownMenu>
+        </ButtonDropdown>
+        {/* <SplitButton
+          bsStyle='default'
+          className="p-0 m-0"
+          title={<div className="input-group p-0">
+              <input
+                type="text"
+                className="form-control w-100 m-0"
+                placeholder="Search.."
+                aria-label="Search"
+                aria-describedby="basic-addon1"
+                value={this.state.search}
+                onChange={e => this.setState({search: e.target.value})}
+              />
+            </div>
+          }
+          id="dropdownsearch"
+        >
+          <ButtonToolbar>
+            <ToggleButtonGroup type="checkbox">
+              <ToggleButton value={1} className="btn-primary">PG</ToggleButton>
+              <ToggleButton value={2} className="btn-primary">SG</ToggleButton>
+              <ToggleButton value={3} className="btn-primary">SF</ToggleButton>
+              <ToggleButton value={4} className="btn-primary">PF</ToggleButton>
+              <ToggleButton value={5} className="btn-primary">C</ToggleButton>
+            </ToggleButtonGroup>
+          </ButtonToolbar>
+        </SplitButton> */}
         <div className="btn-group ml-3" role="group" aria-label="First group">
           <button type="button" className="btn btn-success" onClick={this.showHideCompareSelectionColumn}>Comparison Tool</button>
         </div>
