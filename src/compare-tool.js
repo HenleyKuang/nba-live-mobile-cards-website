@@ -64,12 +64,14 @@ class CardCompare extends React.Component {
             if (details[i].accessor) {
                 let stat1 = this.state.card_data1[details[i].accessor];
                 let stat2 = this.state.card_data2[details[i].accessor];
+                let badgeStat1 = this.getBadgeColor(stat1, stat2);
+                let badgeStat2 = this.getBadgeColor(stat2, stat1);
                 if (details[i].func) {
                     stat1 = details[i].func(stat1)
                     stat2 = details[i].func(stat2)
                 }
-                playerOneDetails.push(<StatRow key={details[i].name} statValue={stat1} badgeType={this.getBadgeColor(stat1, stat2)} dflex={false} padding="p-1" />);
-                playerTwoDetails.push(<StatRow key={details[i].name} statValue={stat2} badgeType={this.getBadgeColor(stat2, stat1)} dflex={false} padding="p-1" />);
+                playerOneDetails.push(<StatRow key={details[i].name} statValue={stat1} badgeType={badgeStat1} dflex={false} padding="p-1" />);
+                playerTwoDetails.push(<StatRow key={details[i].name} statValue={stat2} badgeType={badgeStat2} dflex={false} padding="p-1" />);
             }
         }
         let playerOneStats = [];
