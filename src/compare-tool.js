@@ -96,6 +96,7 @@ class CardCompare extends React.Component {
         return <div>
             <div className="card text-center text-white bg-dark m-3">
                 <div className="card-header">
+                    <a className="btn btn-primary float-left m-1" href="/#/">Back</a>
                     <strong className="text-uppercase">{this.state.card_data1.name}</strong> vs <strong className="text-uppercase">{this.state.card_data2.name}</strong>
                 </div>
                 <div className="card-body">

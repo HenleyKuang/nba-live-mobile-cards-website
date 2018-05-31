@@ -19,7 +19,7 @@ class StatRow extends React.Component {
 
     render() {
             return <li className={`list-group-item justify-content-between align-items-center list-group-item-dark ${this.state.padding} ${this.state.dflex} ${this.state.listGroupClassName}`}>
-                {this.state.statName}
+                <div class="text-left">{this.state.statName}</div>
                 <span className={`badge ${this.state.badgeType} badge-pill ${this.state.className}`}>
                     {this.state.statValue}
                 </span>

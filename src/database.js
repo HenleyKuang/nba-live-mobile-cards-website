@@ -91,7 +91,7 @@ class Database extends React.Component {
           const playerName2 = player_data[1]
           newAlertMsg = [
             `Two cards have been selected: ${playerName1} and ${playerName2} `,
-            <a key='' href={this.CompareCardsUrl(hash1,hash2)} target="_blank"><button type="button" className="btn btn-success" onClick={this.showHideAlertMsg}>Click here to compare</button></a>
+            <a key='' href={this.CompareCardsUrl(hash1,hash2)}><button type="button" className="btn btn-success" onClick={this.showHideAlertMsg}>Click here to compare</button></a>
           ]
           showSelectCompareCards = false
         }
@@ -173,7 +173,7 @@ class Database extends React.Component {
       }, {
         Header: "Card",
         accessor: 'hash',
-        Cell: props => <a href={PlayerProfileUrl(props.value)} target="_blank" ><img width="40" alt='Card Img' src={PlayerCardImgSrc(props.value)} /></a>,
+        Cell: props => <a href={PlayerProfileUrl(props.value)} ><img width="40" alt='Card Img' src={PlayerCardImgSrc(props.value)} /></a>,
         className: "p-0",
         width: 45,
         sortable: false

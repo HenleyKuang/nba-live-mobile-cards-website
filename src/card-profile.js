@@ -51,11 +51,12 @@ class CardProfile extends React.Component {
         return <div>
             <div className="card text-center text-white bg-dark m-3">
                 <div className="card-header">
+                    <a className="btn btn-primary float-left m-1 ml-0" href="/#/">Back</a>
                     {this.state.card_data.name}
                 </div>
                 <div className="card-body">
                     <div className="row">
-                        <div className="col">
+                        <div className="col w-100">
                             <img alt='Card Img' src={PlayerCardImgSrc(this.state.card_data.hash)} />
                             {details}
                         </div>
