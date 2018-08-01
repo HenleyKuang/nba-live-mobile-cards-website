@@ -355,6 +355,9 @@ class Database extends React.Component {
         <div className="btn-group ml-3" role="group" aria-label="First group">
           <button type="button" className="btn btn-info" disabled>Team Analyzer (Coming Soon)</button>
         </div>
+        <div className="btn-group ml-3" role="group" aria-label="First group">
+          <a href="//play.google.com/store/apps/details?id=com.nbalivemobiletools"><img src={require("./Get_it_on_Google_play.svg")} /></a>
+        </div>
       </div>
 
         <ReactTooltip place="top" type="dark" effect="float"/>
